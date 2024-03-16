@@ -1,0 +1,20 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("SQLITE_DB_FILE_PATH")
+}
+
+model DonationHistory {
+  id    Int     @id @default(autoincrement())
+  donor String  
+  recipient String  
+  erc20TokenAddress String
+  netDonation BigInt
+  commission BigInt
+}
