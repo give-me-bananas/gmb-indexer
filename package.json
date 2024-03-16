@@ -17,6 +17,7 @@
     "@prisma/client": "5.11.0",
     "dotenv": "16.0.3",
     "ethers": "5.7.2",
+    "node-fetch": "^3.3.2",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
   }

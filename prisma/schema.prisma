@@ -17,4 +17,10 @@ model DonationHistory {
   erc20TokenAddress String
   netDonation BigInt
   commission BigInt
+  donorName String
+  message String
+}
+
+model LatestBlockNumber {
+  blockNumber Int @id
 }
