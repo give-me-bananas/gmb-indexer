@@ -6,6 +6,7 @@ import { open, Database } from "sqlite";
 import { PrismaClient } from "@prisma/client";
 import { normalizeL1ContractAddress } from "./utils";
 import { AbiCoder } from "ethers/lib/utils";
+import { Erc20TokenDetail } from "./types";
 
 dotenv.config();
 
@@ -22,11 +23,6 @@ const startBlockNumber = parseInt(process.env.START_BLOCK_NUMBER!);
 const numOfBlocksToIndex = 1000;
 
 const abi = BananaController.abi;
-
-type Erc20TokenDetail = {
-  symbol: string;
-  decimal: number;
-};
 
 const erc20TokenDetailMapping: Map<string, Erc20TokenDetail> = new Map();
 for (let i = 0; i < supportedErc20TokenAddress.length; i++) {
@@ -138,16 +134,6 @@ async function notifyStreamer(
     headers: customHeaders,
     body: JSON.stringify(data),
   });
-
-  // fetch(url, {
-  //   method: "POST",
-  //   headers: customHeaders,
-  //   body: JSON.stringify(data),
-  // })
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     console.log(data);
-  //   });
 }
 
 (async () => {
