@@ -11,3 +11,8 @@ export type Erc20TokenDetail = {
   symbol: string;
   decimal: number;
 };
+
+export type AddressMappingRequestModel = {
+  address: string;
+  smartAccountAddress: string;
+};

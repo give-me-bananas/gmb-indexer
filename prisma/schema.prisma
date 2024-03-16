@@ -24,3 +24,8 @@ model DonationHistory {
 model LatestBlockNumber {
   blockNumber Int @id
 }
+
+model AddressMapping {
+  address String @id
+  smartAddress String
+}

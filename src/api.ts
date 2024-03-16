@@ -2,7 +2,11 @@ import express from "express";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 import { normalizeL1ContractAddress } from "./utils";
-import { DonationHistoryResponse, Erc20TokenDetail } from "./types";
+import {
+  AddressMappingRequestModel,
+  DonationHistoryResponse,
+  Erc20TokenDetail,
+} from "./types";
 import { BigNumber } from "ethers";
 
 const supportedErc20TokenAddress =
@@ -56,6 +60,30 @@ const main = () => {
     return response.status(200).json(donationHistories);
   });
 
+  app.post("/address-mapping", async (request, response) => {
+    const model: AddressMappingRequestModel = request.body;
+
+    await insertAddressMapping(db, model);
+
+    return response.status(200).json({ status: "Success" });
+  });
+
+  app.get("/smart-account/:address", async (request, response) => {
+    const address = request.params.address;
+    const smartAccountAddress = await getSmartAccountAddressByAddress(
+      db,
+      address
+    );
+
+    if (!smartAccountAddress) {
+      return response.status(201).json();
+    }
+
+    return response
+      .status(200)
+      .json({ smartAccountAddress: smartAccountAddress });
+  });
+
   app.listen(3000, () => {
     console.log("Server started on port 3000");
   });
@@ -105,4 +133,29 @@ function donationMapping(donationHistories: DonationHistory[]) {
   });
 
   return response;
+}
+
+async function getSmartAccountAddressByAddress(
+  db: PrismaClient,
+  address: string
+) {
+  const res = await db.addressMapping.findFirst({
+    where: {
+      address: address,
+    },
+  });
+
+  return res ? res.smartAddress : null;
+}
+
+async function insertAddressMapping(
+  db: PrismaClient,
+  addressMappingRequest: AddressMappingRequestModel
+) {
+  await db.addressMapping.create({
+    data: {
+      smartAddress: addressMappingRequest.smartAccountAddress,
+      address: addressMappingRequest.address,
+    },
+  });
 }
