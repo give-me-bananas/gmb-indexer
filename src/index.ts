@@ -126,7 +126,7 @@ async function notifyStreamer(
   const data = {
     senderName: donorName,
     message,
-    tipAmount: `${erc20Detail.symbol} ${normalizedAmount}`,
+    tipAmount: `${erc20Detail.symbol}${normalizedAmount}`,
   };
 
   const customHeaders = {

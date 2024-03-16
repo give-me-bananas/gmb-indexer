@@ -4,3 +4,5 @@ node_modules
 prisma/migrations
 dev.db
 dev.db-journal
+.env.arbitrum-sepolia
+.env.base-sepolia
