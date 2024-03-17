@@ -53,7 +53,7 @@ async function main(db: PrismaClient) {
     const fromBlockNumber = latestBlockNumber
       ? latestBlockNumber.blockNumber + 1
       : startBlockNumber;
-    const toBlockNumber = fromBlockNumber + numOfBlocksToIndex;
+    const toBlockNumber = fromBlockNumber;
 
     const filter = {
       ...donationFilter,
@@ -65,7 +65,7 @@ async function main(db: PrismaClient) {
     for (const log of logs) {
       const donor = normalizeL1ContractAddress(log.topics[1]);
       const recipient = normalizeL1ContractAddress(log.topics[2]);
-      const erc20TokenAddress = normalizeL1ContractAddress(log.topics[2]);
+      const erc20TokenAddress = normalizeL1ContractAddress(log.topics[3]);
 
       const values = new AbiCoder().decode(
         ["uint256", "uint256", "string", "string"],
@@ -116,9 +116,9 @@ async function notifyStreamer(
   const erc20Detail = erc20TokenDetailMapping.get(
     normalizeL1ContractAddress(erc20TokenAddress)
   )!;
-  if(erc20Detail === undefined) {
+  if (erc20Detail === undefined) {
     // Do nothing if not tracking it.
-    return;  
+    return;
   }
 
   const divisor = BigNumber.from(10).pow(erc20Detail.decimal);
