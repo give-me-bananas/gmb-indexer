@@ -53,7 +53,9 @@ async function main(db: PrismaClient) {
     const fromBlockNumber = latestBlockNumber
       ? latestBlockNumber.blockNumber + 1
       : startBlockNumber;
-    const toBlockNumber = fromBlockNumber;
+
+    const latestBlockNumberRpc = await provider.getBlockNumber();
+    const toBlockNumber = latestBlockNumberRpc;
 
     const filter = {
       ...donationFilter,
