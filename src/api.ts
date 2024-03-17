@@ -35,8 +35,8 @@ type DonationHistory = {
   donor: string;
   recipient: string;
   erc20TokenAddress: string;
-  netDonation: bigint;
-  commission: bigint;
+  netDonation: string;
+  commission: string;
   donorName: string;
   message: string;
 };
@@ -70,9 +70,9 @@ const main = () => {
       where: {
         address: model.address,
       },
-    })
+    });
 
-    if(matches) {
+    if (matches) {
       return response.status(200).json({ status: "Already Exists" });
     }
 
