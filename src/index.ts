@@ -116,6 +116,11 @@ async function notifyStreamer(
   const erc20Detail = erc20TokenDetailMapping.get(
     normalizeL1ContractAddress(erc20TokenAddress)
   )!;
+  if(erc20Detail === undefined) {
+    // Do nothing if not tracking it.
+    return;  
+  }
+
   const divisor = BigNumber.from(10).pow(erc20Detail.decimal);
   const normalizedAmount = amount.div(divisor);
 
