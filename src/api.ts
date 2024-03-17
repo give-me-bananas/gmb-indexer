@@ -66,6 +66,16 @@ const main = () => {
   app.post("/address-mapping", async (request, response) => {
     const model: AddressMappingRequestModel = request.body;
 
+    const matches = await db.addressMapping.findFirst({
+      where: {
+        address: model.address,
+      },
+    })
+
+    if(matches) {
+      return response.status(200).json({ status: "Already Exists" });
+    }
+
     await insertAddressMapping(db, model);
 
     return response.status(200).json({ status: "Success" });
