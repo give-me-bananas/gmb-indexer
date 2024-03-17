@@ -8,6 +8,9 @@ import {
   Erc20TokenDetail,
 } from "./types";
 import { BigNumber } from "ethers";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const supportedErc20TokenAddress =
   process.env.SUPPORTED_ERC20_TOKEN_ADDRESS!.split(",");
