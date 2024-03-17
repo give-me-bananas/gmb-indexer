@@ -15,8 +15,8 @@ model DonationHistory {
   donor String  
   recipient String  
   erc20TokenAddress String
-  netDonation BigInt
-  commission BigInt
+  netDonation String
+  commission String
   donorName String
   message String
 }
